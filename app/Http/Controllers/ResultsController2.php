@@ -28,20 +28,41 @@ class ResultsController2 extends Controller
 	{
 		$QueryAppend = "";
 		$formMake = $request->input('make');
+		$formSort = $request->input('sort');
 		if ($request->isMethod('post'))
 		{
         	if ($formMake!="none")
         	{
         		$QueryAppend = " WHERE cars.make='".$formMake."'";//This only filters the results if there has been a form selection
         	}
+        	if ($formSort!="none")
+        	{
+        		switch($formSort)
+        		{
+        			case "make":
+        				$QueryAppend .= " ORDER BY cars.make";
+        				break;
+        			case "model":
+        				$QueryAppend .= " ORDER BY cars.model";
+        				break;
+        			case "mileage":
+        				$QueryAppend .= " ORDER BY cars.mileage ASC";
+        				break;
+        		}
+        		
+        		
+        	}
 
         }
+        
+
 		//This will query the database for our cars
 		//$cars = DB::connection('mysql')->select("select * from cars");
         $query = 'SELECT * FROM `cars` 
 			INNER JOIN makes on cars.make=makes.id 
 			INNER JOIN models on cars.model=models.id';
 		$cars = \DB::select($query.$QueryAppend);
+		print_r($query.$QueryAppend);
 		$makes = \DB::select('SELECT * FROM `makes`');
 		
 		

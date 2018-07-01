@@ -38,7 +38,11 @@
 			<option value="{{$make->id}}">{{$make->make}}</option>
 		@endforeach
 	</select>
-		
+		{{ Form::radio('sort', 'none', true) }} None
+		{{ Form::radio('sort', 'make', false) }} Make
+		{{ Form::radio('sort', 'model', false) }} Model
+		{{ Form::radio('sort', 'mileage', false) }} Mileage
+
 		{{ Form::submit('Update') }}
 	{{ Form::close() }}
 	<div class="grid">
