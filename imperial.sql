@@ -98,6 +98,33 @@ INSERT INTO `models` (`id`, `model`) VALUES
 (5, 'Zafira');
 COMMIT;
 
+--
+-- Table structure for table `cars`
+--
+
+-- --------------------------------------------------------
+
+DROP TABLE IF EXISTS `features`;
+CREATE TABLE IF NOT EXISTS `features` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `feature` varchar(80) NOT NULL,
+  `cost` int(11),
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `cars`
+--
+
+INSERT INTO `features` (`id`, `feature`, `cost`) VALUES
+(1, 'Electric Windows',150),
+(2, 'BlueTooth',250),
+(3, 'Sat Nav',1100),
+(4, 'All Wheel Drive',2000),
+(5, 'Sliding Side Door',1300);
+
+-- --------------------------------------------------------
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
