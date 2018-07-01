@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 30, 2018 at 08:54 PM
+-- Generation Time: Jul 01, 2018 at 10:05 PM
 -- Server version: 5.7.21
 -- PHP Version: 7.2.4
 
@@ -21,6 +21,43 @@ SET time_zone = "+00:00";
 --
 -- Database: `imperial`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `carfeatures`
+--
+
+DROP TABLE IF EXISTS `carfeatures`;
+CREATE TABLE IF NOT EXISTS `carfeatures` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `carID` int(11) NOT NULL,
+  `featureID` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `carfeatures`
+--
+
+INSERT INTO `carfeatures` (`id`, `carID`, `featureID`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 2, 1),
+(5, 2, 2),
+(6, 2, 4),
+(7, 2, 3),
+(8, 3, 1),
+(9, 3, 2),
+(10, 3, 3),
+(11, 4, 1),
+(12, 4, 2),
+(13, 5, 1),
+(14, 5, 2),
+(15, 5, 5),
+(16, 6, 1),
+(17, 7, 1);
 
 -- --------------------------------------------------------
 
@@ -50,6 +87,31 @@ INSERT INTO `cars` (`id`, `make`, `model`, `number_plate`, `mileage`) VALUES
 (5, 2, 4, 'SB66ABF', 32033),
 (6, 3, 5, 'WG12ARB', 32033),
 (7, 3, 5, 'AG12BEF', 48742);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `features`
+--
+
+DROP TABLE IF EXISTS `features`;
+CREATE TABLE IF NOT EXISTS `features` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `feature` varchar(80) NOT NULL,
+  `cost` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `features`
+--
+
+INSERT INTO `features` (`id`, `feature`, `cost`) VALUES
+(1, 'Electric Windows', 150),
+(2, 'BlueTooth', 250),
+(3, 'Sat Nav', 1100),
+(4, 'All Wheel Drive', 2000),
+(5, 'Sliding Side Door', 1300);
 
 -- --------------------------------------------------------
 
@@ -98,60 +160,6 @@ INSERT INTO `models` (`id`, `model`) VALUES
 (5, 'Zafira');
 COMMIT;
 
---
--- Table structure for table `features`
---
-
--- --------------------------------------------------------
-
-DROP TABLE IF EXISTS `features`;
-CREATE TABLE IF NOT EXISTS `features` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `feature` varchar(80) NOT NULL,
-  `cost` int(11),
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `features`
---
-
-INSERT INTO `features` (`id`, `feature`, `cost`) VALUES
-(1, 'Electric Windows',150),
-(2, 'BlueTooth',250),
-(3, 'Sat Nav',1100),
-(4, 'All Wheel Drive',2000),
-(5, 'Sliding Side Door',1300);
-
--- --------------------------------------------------------
---
--- Table structure for table `features`
---
-
--- --------------------------------------------------------
-
-DROP TABLE IF EXISTS `carfeatures`;
-CREATE TABLE IF NOT EXISTS `carfeatures` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `carID` int(11) NOT NULL,
-  `featureID` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `features`
---
-
-INSERT INTO `carfeatures` (`id`,`carID`, `featureID`) VALUES
-(1,1,1),
-(2,1,2),
-(3,1,4),
-(4,2,1),
-(5,2,2),
-(6,2,4),
-(7,2,3);
-
--- --------------------------------------------------------
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

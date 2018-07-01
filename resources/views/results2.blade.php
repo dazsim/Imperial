@@ -42,7 +42,14 @@
 		{{ Form::radio('sort', 'make', false) }} Make
 		{{ Form::radio('sort', 'model', false) }} Model
 		{{ Form::radio('sort', 'mileage', false) }} Mileage
+		<div>
+			{{ Form::checkbox('electricwindows','electricwindows')}} Electric Windows
+			{{ Form::checkbox('bluetooth','bluetooth')}} BlueTooth™
+			{{ Form::checkbox('satnav','satnav')}} Sat Nav
+			{{ Form::checkbox('slidingdoor','slidingdoor')}} Sliding Side Door
+			{{ Form::checkbox('allwheeldrive','allwheeldrive')}} All Wheel Drive
 
+		</div>
 		{{ Form::submit('Update') }}
 	{{ Form::close() }}
 	<div class="grid">
