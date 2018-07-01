@@ -40,10 +40,10 @@ class ResultsController2 extends Controller
         		switch($formSort)
         		{
         			case "make":
-        				$QueryAppend .= " ORDER BY cars.make";
+        				$QueryAppend .= " ORDER BY makes.make";
         				break;
         			case "model":
-        				$QueryAppend .= " ORDER BY cars.model";
+        				$QueryAppend .= " ORDER BY models.model";
         				break;
         			case "mileage":
         				$QueryAppend .= " ORDER BY cars.mileage ASC";
