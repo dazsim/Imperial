@@ -15,6 +15,6 @@ class ResultsController extends Controller
 		//This will query the database for our cars
 		//$cars = DB::connection('mysql')->select("select * from cars");
 		$cars = \DB::select('SELECT * FROM `cars` INNER JOIN makes on cars.make=makes.id INNER JOIN models on cars.model=models.id');
-		return view('results',['cars'=>$cars]);
+		return view('results',['cars'=>$cars,'']);
 	}
 }

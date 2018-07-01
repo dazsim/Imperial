@@ -13,4 +13,7 @@
 
 Route::get('/', 'ResultsController@show_all');
 
+Route::get('/question3','ResultsController2@show_all');
+Route::post('/question3','ResultsController2@show_all_filtered');
 
+Route::get('/question4','ResultsController2@show_all');
