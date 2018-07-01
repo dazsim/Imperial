@@ -99,7 +99,7 @@ INSERT INTO `models` (`id`, `model`) VALUES
 COMMIT;
 
 --
--- Table structure for table `cars`
+-- Table structure for table `features`
 --
 
 -- --------------------------------------------------------
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `features` (
 ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `cars`
+-- Dumping data for table `features`
 --
 
 INSERT INTO `features` (`id`, `feature`, `cost`) VALUES
@@ -124,7 +124,34 @@ INSERT INTO `features` (`id`, `feature`, `cost`) VALUES
 (5, 'Sliding Side Door',1300);
 
 -- --------------------------------------------------------
+--
+-- Table structure for table `features`
+--
 
+-- --------------------------------------------------------
+
+DROP TABLE IF EXISTS `carfeatures`;
+CREATE TABLE IF NOT EXISTS `carfeatures` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `carID` int(11) NOT NULL,
+  `featureID` int(11) NOT NULL
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `features`
+--
+
+INSERT INTO `carfeatures` (`id`,`carID`, `featureID`) VALUES
+(1,1,1),
+(2,1,2),
+(3,1,4),
+(4,2,1),
+(5,2,2),
+(6,2,4),
+(7,2,3);
+
+-- --------------------------------------------------------
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
