@@ -46,6 +46,20 @@ class ResultsController2 extends Controller
 		$formMake = $request->input('make');
 		$formSort = $request->input('sort');
 		
+
+		/*
+
+		This Function needs rewriting to make use of the follow query layout
+
+		SELECT * FROM carfeatures
+		JOIN cars ON cars.id=carfeatures.carID
+		WHERE
+			
+		(carfeatures.featureID=1) OR (carfeatures.featureID=2)
+		GROUP BY (carfeatures.carID)
+		HAVING COUNT(carfeatures.featureID)=2
+		*/
+
 		$filterFeatureElectricWindows = $request->input('electricwindows');
 		$filterFeatureBlueTooth = $request->input('bluetooth');
 		$filterFeatureSatNav = $request->input('satnav');
@@ -142,7 +156,7 @@ class ResultsController2 extends Controller
 		}
 			
 		$cars = \DB::select($query.$QueryAppend);
-		//print_r($query.$QueryAppend);
+		print_r($query.$QueryAppend);
 		
 		//echo "\r\n";
 		$makes = \DB::select('SELECT * FROM `makes`');
