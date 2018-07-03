@@ -51,14 +51,28 @@ class ResultsController2 extends Controller
 
 		This Function needs rewriting to make use of the follow query layout
 
-		SELECT * FROM carfeatures
-		JOIN cars ON cars.id=carfeatures.carID
+		SELECT cars.id, cars.number_plate, makes.make, models.model, cars.mileage FROM CARS 
+		JOIN carfeatures ON cars.id=carfeatures.carID
+        INNER JOIN makes on cars.make=makes.id
+		INNER JOIN models on cars.model=models.id
 		WHERE
-			
-		(carfeatures.featureID=1) OR (carfeatures.featureID=2)
-		GROUP BY (carfeatures.carID)
-		HAVING COUNT(carfeatures.featureID)=2
+		(carfeatures.featureID=1) OR (carfeatures.featureID=2)  AND (makes.make="BMW")
+		GROUP BY (cars.id)                       
+		HAVING COUNT(carfeatures.featureID)=2 
+		ORDER BY cars.mileage
 		*/
+		$SQL_Select = "SELECT cars.id, cars.number_plate, makes.make, models.model, cars.mileage FROM CARS ";
+		$SQL_Joins = "
+		JOIN carfeatures ON cars.id=carfeatures.carID
+        INNER JOIN makes on cars.make=makes.id
+		INNER JOIN models on cars.model=models.id 
+		";
+		$SQL_Where = "";
+		$SQL_Group = "GROUP BY (cars.id)
+		";
+		$SQL_Having = "";
+		$SQL_Order = "";
+
 
 		$filterFeatureElectricWindows = $request->input('electricwindows');
 		$filterFeatureBlueTooth = $request->input('bluetooth');
@@ -72,7 +86,8 @@ class ResultsController2 extends Controller
 		{
         	if ($formMake!="none")
         	{
-        		$QueryAppend = " WHERE cars.make='".$formMake."'";//This only filters the results if there has been a form selection
+        		//This could be abused.
+        		$SQL_Where = " WHERE cars.make='".$formMake."'";//This only filters the results if there has been a form selection
         	}
 					
 			if ($filterFeatureElectricWindows)
@@ -97,43 +112,54 @@ class ResultsController2 extends Controller
 				array_push($featureList,4);
 				
 			}
-			$result = "(";
-			$count=0;
-			foreach ($featureList as $featureElement)
-			{
-				if ($count>0)
-				{
-					$result .=",";
-				}
-				$result.=$featureElement;
-				$count++;
-			}
-			$result.=")";
+			
+			
+			
 			
 			if (sizeof($featureList)>0)
 			{
-				$QueryAppend .= " WHERE carfeatures.carID=cars.id AND features.id IN ".$result;
+				if ($SQL_Where=="")
+				{
+					$SQL_Where = "WHERE ";
+				}
+				else 
+				{
+					$SQL_Where .=" AND ";
+				}
 				
-			}
-			$QueryAppend .= " GROUP BY cars.id";
+				$count =0;
+				foreach ($featureList as $featureElement)
+				{
+					if ($count>0)
+					{
+						$SQL_Where .= " OR ";
+					}
+					$SQL_Where .= "(carfeatures.featureID=".$featureElement.")";
+					$count++;
+				}
+
+			}	
+			
+			
 			if (sizeof($featureList)>0)
 			{
-				$QueryAppend .= ", carfeatures.id";
+				$SQL_Having .= " HAVING COUNT(carfeatures.featureID)=".sizeof($featureList);
 			}
-			//$QueryAppend .= " HAVING COUNT(DISTINCT carfeatures.featureID) = ".sizeof($featureList);
+			
+			
 			
         	if ($formSort!="none")
         	{
         		switch($formSort)
         		{
         			case "make":
-        				$QueryAppend .= " ORDER BY makes.make";
+        				$SQL_Order .= " ORDER BY makes.make";
         				break;
         			case "model":
-        				$QueryAppend .= " ORDER BY models.model";
+        				$SQL_Order .= " ORDER BY models.model";
         				break;
         			case "mileage":
-        				$QueryAppend .= " ORDER BY cars.mileage ASC";
+        				$SQL_Order .= " ORDER BY cars.mileage ASC";
         				break;
         		}
 
@@ -143,22 +169,12 @@ class ResultsController2 extends Controller
         }
 
 
-		//This will query the database for our cars
-		//$cars = DB::connection('mysql')->select("select * from cars");
-        $query = 'SELECT * FROM `cars`
-			INNER JOIN makes on cars.make=makes.id
-			INNER JOIN models on cars.model=models.id';
-		if (($filterFeatureElectricWindows!="") || ($filterFeatureSatNav!="") || ($filterFeatureBlueTooth!="") || ($filterFeatureAllWheelDrive!="") || ($filterFeatureSlidingSideDoor!=""))
-		{
-			$query .= ' LEFT JOIN carfeatures on cars.id=carfeatures.carID
-			LEFT JOIN features on features.id=carfeatures.featureID
-			';
-		}
-			
-		$cars = \DB::select($query.$QueryAppend);
-		print_r($query.$QueryAppend);
 		
-		//echo "\r\n";
+		$query = $SQL_Select.$SQL_Joins.$SQL_Where.$SQL_Group.$SQL_Having.$SQL_Order;
+		$cars = \DB::select($query);
+		
+		//print_r($query);
+		
 		$makes = \DB::select('SELECT * FROM `makes`');
 
 		$carsResult = [];
